@@ -1,5 +1,6 @@
-import firebase from "firebase/app";
-import "firebase/database";
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyBiBnL9t2LfrOxbsQJvzIPCnnsXJDDySJg",
@@ -11,15 +12,33 @@ const firebaseConfig = {
     appId: "1:925815299346:web:0c627e29a0cc0a2167e7cb",
     measurementId: "G-JC1LC9WTJT"
 };
- 
-firebase.initializeApp(firebaseConfig);
-
-const dbApp = firebase;
-
+ const dbApp = firebase
+    .initializeApp(firebaseConfig)
+    .firestore();
 export default dbApp;
 
- 
-   //  dataFirebase.database().ref(itemFood.id).once("value",function(snapshot){
-            //     var bb = snapshot.val();
-            //     console.log(bb);
-            //  })
+// var data = [
+//     {
+//         title: 'Matcha Iceblend', content: '100% da', category: 'Tra Sua'
+//     },
+//     {
+//         title: 'Ca Phe Sua', content: 'Latte', category: 'Coffee'
+//     },
+//     {
+//         title: 'Soda Chanh', content: 'Khong Duong', category: 'Soda'
+//     },
+// ]
+
+
+// data.forEach((items) => {
+//     foodRef.doc().set({
+//        title: items.title,
+//        content: items.content,
+//        category: items.category,
+//     })
+// });
+// var foodDel = dbApp.collection("foods") .onSnapshot(function(querySnapshot) {
+//     querySnapshot.forEach(function(doc) {
+//      console.log(doc.data());
+//     });
+// })

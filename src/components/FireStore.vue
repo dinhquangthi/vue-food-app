@@ -21,9 +21,8 @@
               <td v-if="items.category == '1'">Cà Phê</td>
               <td v-else-if="items.category == '2'">Trà Sữa</td>
               <td v-else-if="items.category == '3'">Soda</td>
-              <td v-else></td>
               <td>
-                <v-btn small color="orange darken-4" dark class="mr-2">Edit</v-btn>
+                <v-btn small color="orange darken-4" dark :value="items.id" class="mr-2">Edit</v-btn>
                 <v-btn small color="teal darken-3" dark @click="delFood" :value="items.id">Delete</v-btn>
               </td>
             </tr>
@@ -33,12 +32,13 @@
       <v-row align="center" justify="center" v-if="statusLoading === true">
         <v-progress-circular indeterminate color="red" size="70" width="4" class="mt-6 mb-6"></v-progress-circular>
       </v-row>
+      
     </v-card>
   </v-col>
 </template>
 
 <script>
-import dataFirebase from "@/api/dataFirebase";
+import dbApp from "@/api/dataFirebase";
 import Swal from "sweetalert2";
 
 export default {
@@ -52,29 +52,9 @@ export default {
   },
   methods: {
     delFood(idFood) {
-      // if (confirm("Are you sure delete this ?") === true) {
-        idFood = event.currentTarget.value;
-        this.$store.dispatch("actionDelFood", idFood);
-      // } else {
-      //   return false;
-      // }
-      // Swal.fire({
-      //   title: "Are you sure delete this food ?",
-      //   icon: "warning",
-      //   showCancelButton: true,
-      //   confirmButtonColor: "#4caf50",
-      //   cancelButtonColor: "#d33",
-      //   confirmButtonText: "Yes, delete it!"
-      // }).then(result => {
-      //   if (result.value == true) {
-      //     return 
-      //     console.log("aaa");
-      //     // Swal.fire("Deleted!", "Your food has been deleted.", "success");
-      //   } else {
-      //     return false;
-      //   }
-      // });
-    }
+      idFood = event.currentTarget.value;
+      this.$store.dispatch("actionDelFood", idFood);
+    },
   },
   created() {
     setTimeout(() => {
@@ -82,7 +62,7 @@ export default {
         this.$store.state.loading = false;
       });
     }, 2000);
-  }
+  },
 };
 </script>
 

@@ -1,11 +1,13 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
-import dataFirebase from '../api/dataFirebase';
+import  dbApp from '../api/dataFirebase';
 import { getField, updateField } from 'vuex-map-fields';
 import Swal from "sweetalert2";
+import { firestorePlugin } from 'vuefire'
 
+Vue.use(firestorePlugin)
 Vue.use(Vuex)
-
+var foodRef = dbApp.collection("foods");
 export default new Vuex.Store({
     state: {
         food: [],
@@ -28,23 +30,21 @@ export default new Vuex.Store({
     },
     mutations: {
         setFoods(state, foods) {
-            var dataValue = dataFirebase.database().ref().once("value").then(function (snapshot) {
-                var foodItem = snapshot.forEach(function (item) {
+            foodRef.orderBy("created").get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (items) {
                     state.food.push({
-                        id: item.key,
-                        title: item.child("title").val(),
-                        content: item.child("content").val(),
-                        category: item.child("category").val()
+                        id: items.id,
+                        title: items.data().title,
+                        content: items.data().content,
+                        category: items.data().category,
+                        created: (new Date()).toLocaleString(),
                     })
-                });
+                    // console.log(items.id);
+                })
+            }).catch(function (error) {
+                console.log("Error getting documents: ", error);
             });
             state.food = [];
-        },
-        updateTitleFood(state, value) {
-            state.formInput.titleFood = value
-        },
-        updateContentFood(state, value) {
-            state.formInput.contentFood = value
         },
         removeFood(state, itemFood) {
             return new Promise((resolve, reject) => {
@@ -65,19 +65,18 @@ export default new Vuex.Store({
                                 break;
                             }
                         }
-                        var itemDel = dataFirebase.database().ref(itemFood.id);
-                        itemDel.remove();
+                        foodRef.doc(itemFood.id).delete();
                         // Pop-up delete success !
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 2500,
                             timerProgressBar: true,
                         })
                         Toast.fire({
                             icon: 'success',
-                            title: 'Delete successfully'
+                            title: 'Delete successfully',
                         })
                         //--------------------------//
                     } else {
