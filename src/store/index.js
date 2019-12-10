@@ -12,6 +12,7 @@ export default new Vuex.Store({
     state: {
         food: [],
         loading: true,
+        itemEdit: null,
     },
     getters: {
         availableFood(state, getters) {

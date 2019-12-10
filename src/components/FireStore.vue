@@ -1,6 +1,6 @@
 <template>
   <v-col cols="8">
-    <h4>List Food</h4>
+    <h4 class="teal--text text-center headline font-weight-bold mb-6">List Food</h4>
     <v-card outline>
       <v-simple-table>
         <template v-slot:default>
@@ -18,11 +18,10 @@
               <th scope="row">{{index+1}}</th>
               <td>{{items.title}}</td>
               <td>{{items.content}}</td>
-              <td v-if="items.category == '1'">Cà Phê</td>
-              <td v-else-if="items.category == '2'">Trà Sữa</td>
-              <td v-else-if="items.category == '3'">Soda</td>
+              <td>{{items.category}}</td>
+            
               <td>
-                <v-btn small color="orange darken-4" dark :value="items.id" class="mr-2">Edit</v-btn>
+                <EditFood :value="items.id"></EditFood>
                 <v-btn small color="teal darken-3" dark @click="delFood" :value="items.id">Delete</v-btn>
               </td>
             </tr>
@@ -32,7 +31,6 @@
       <v-row align="center" justify="center" v-if="statusLoading === true">
         <v-progress-circular indeterminate color="red" size="70" width="4" class="mt-6 mb-6"></v-progress-circular>
       </v-row>
-      
     </v-card>
   </v-col>
 </template>
@@ -40,8 +38,11 @@
 <script>
 import dbApp from "@/api/dataFirebase";
 import Swal from "sweetalert2";
-
+import EditFood from "@/components/EditFood"
 export default {
+  components: {
+    EditFood
+  },
   computed: {
     stateFoods() {
       return this.$store.getters.availableFood;
@@ -55,6 +56,7 @@ export default {
       idFood = event.currentTarget.value;
       this.$store.dispatch("actionDelFood", idFood);
     },
+  
   },
   created() {
     setTimeout(() => {
@@ -62,7 +64,7 @@ export default {
         this.$store.state.loading = false;
       });
     }, 2000);
-  },
+  }
 };
 </script>
 

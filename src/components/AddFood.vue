@@ -1,5 +1,6 @@
 <template>
   <v-col cols="4" class="border-primary">
+    <h4 class="teal--text text-center headline font-weight-bold mb-6">Add Food</h4>
     <v-form  ref="form" >
       <div class="form-group">
         <label>Title</label>
@@ -29,8 +30,9 @@
           v-model="selected"
           :items="items"
           item-text="nameCategory"
-          item-value="id"
+          item-value="nameCategory"
           required
+          placeholder="Please select category..."
           @change="handleChange"
         ></v-select>
       </div>
@@ -54,19 +56,19 @@ export default {
       title: null,
       content: null,
       category: null,
-      created: firebase.firestore.Timestamp.now(),
+      created: '',
     },
     items: [
       {
-        id: 1,
+        // id: 1,
         nameCategory: "Cà Phê"
       },
       {
-        id: 2,
+        // id: 2,
         nameCategory: "Trà sữa"
       },
       {
-        id: 3,
+        // id: 3,
         nameCategory: "Soda"
       }
     ],
@@ -92,6 +94,7 @@ export default {
     },
     logFood(getTitle, getContent) {
       var foodRef = dbApp.collection("foods");
+      var timeCreated = firebase.firestore.Timestamp.now();
       if (this.dataName.title == null || this.dataName.title == "") {
         Swal.fire({
           title: "Warning !",
@@ -117,6 +120,7 @@ export default {
           confirmButtonText: "Ok"
         });
       } else {
+        this.dataName.created = timeCreated;
         foodRef.doc().set(this.dataName);
         this.$store.state.food.push(this.dataName);
         Swal.fire({
@@ -126,7 +130,7 @@ export default {
           confirmButtonText: "Ok"
         });
          this.$store.dispatch("loadDataFood").then(() => {this.$refs.form.reset();});
-       // this.$refs.form.reset();
+
       }
     }
   }

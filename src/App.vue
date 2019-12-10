@@ -3,7 +3,7 @@
     <v-container>
       <v-row mt="4">
         <v-col col="12">
-          <h2 class="text-center font-weight-bold">Data Firebase</h2>
+          <h2 class="text-center font-weight-bold mb-8">Data Firebase</h2>
           <v-row>
             <AddFood />
             <FireStore />
