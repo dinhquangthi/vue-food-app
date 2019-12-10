@@ -122,7 +122,6 @@ export default {
       } else {
         this.dataName.created = timeCreated;
         foodRef.doc().set(this.dataName);
-        this.$store.state.food.push(this.dataName);
         Swal.fire({
           title: "Success !",
           text: "Thêm dữ liệu mới thành công !",
