@@ -80,6 +80,7 @@ export default {
             this.itemEdit.title = element.data().title;
             this.itemEdit.content = element.data().content;
             this.selectedOld = element.data().category;
+            this.itemEdit.category = element.data().category;
           } else {
             alert("No such document!");
           }
