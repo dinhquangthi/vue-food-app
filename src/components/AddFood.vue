@@ -10,6 +10,7 @@
           solo
           clearable
           name="title"
+          autocomplete="off"
           @input="getTitle"
         ></v-text-field>
       </div>
@@ -20,6 +21,7 @@
           single-line
           solo
           clearable
+          autocomplete="off"
           name="content"
           @input="getContent"
         ></v-text-field>
@@ -61,11 +63,11 @@ export default {
     items: [
       {
         // id: 1,
-        nameCategory: "Cà Phê"
+        nameCategory: "Coffee"
       },
       {
         // id: 2,
-        nameCategory: "Trà sữa"
+        nameCategory: "Milk"
       },
       {
         // id: 3,
@@ -73,7 +75,7 @@ export default {
       }
     ],
     rules: {
-      required: value => !!value || "Không được để trống."
+      required: value => !!value || "Must be characters"
     }
   }),
   computed: {

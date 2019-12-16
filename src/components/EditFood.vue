@@ -57,11 +57,11 @@ export default {
     items: [
       {
         id: 1,
-        nameCategory: "Cà Phê"
+        nameCategory: "Coffee"
       },
       {
         id: 2,
-        nameCategory: "Trà sữa"
+        nameCategory: "Milk"
       },
       {
         id: 3,
